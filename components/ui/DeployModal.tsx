@@ -128,7 +128,7 @@ const DeployModal = ({ token, onClose }) => {
                 View transaction
               </a>
 
-              <p className="pt-6 text-sm text-grey">Thanks for using Gaslite Drop</p>
+              <p className="pt-6 text-sm text-grey">Thanks for using SeiLite Drop by $SEIYAN!</p>
             </div>
             <button
               className="bg-zinc-700 font-medium rounded-md text-white backdrop-blur w-full capitalize p-4 tracking-wide"

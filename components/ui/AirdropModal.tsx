@@ -476,16 +476,16 @@ const AirdropModal = ({
 
   return (
     <div className="flex items-center justify-center fixed top-0 left-0 w-full h-[100dvh] z-[10000]">
-      <div className="absolute top-0 left-0 h-full w-full z-[1] bg-white text-black bg-opacity-90" />
-      <div className="flex flex-col w-4/5 md:w-1/2 mx-auto bg-white text-black rounded-md border-[2px] border-grey/[.3] z-[2] p-6">
+      <div className="absolute top-0 left-0 h-full w-full z-[1] bg-white text-zinc bg-opacity-90" />
+      <div className="flex flex-col w-4/5 md:w-1/2 mx-auto bg-white text-zinc rounded-md border-[2px] border-grey/[.3] z-[2] p-6">
         {isLoading ? (
           <div className="flex w-full h-full items-center justify-center">
-            <SpinnerIcon className="animate-spin text-5xl text-primary" />
+            <SpinnerIcon className="animate-spin text-5xl text-zinc" />
           </div>
         ) : airdropHash ? (
           <>
             <div className="mx-auto text-center my-8 space-y-4">
-              <h1 className="text-3xl text-black font-bold text-primary">
+              <h1 className="text-3xl text-black font-bold text-zinc">
                 Congratulations!
               </h1>
               {congratsRenderer ? (
@@ -498,7 +498,7 @@ const AirdropModal = ({
                 <div className="flex flex-col">
                   <p className="text-xl">Your tokens have been sent</p>
                   <a
-                    className="underline text-primary my-2"
+                    className="underline text-zinc my-2"
                     href={deriveExternalLink(airdropHash, chain.id)}
                     target="_blank"
                     rel="noreferrer"
@@ -508,7 +508,7 @@ const AirdropModal = ({
                 </div>
               )}
               <p className="pt-6 text-sm text-grey">
-                Thanks for using Gaslite Drop
+                Thanks for using SeiLite Drop by $SEIYAN!
               </p>
             </div>
             <button
