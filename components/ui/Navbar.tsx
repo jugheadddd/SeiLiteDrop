@@ -13,7 +13,6 @@ export default function Navbar() {
 
   const getBlockExplorer = (chainName: string) => {
     const chainId = chain?.id || "1";
-    console.log("CHAINID", chain)
     const explorers: any = {
       SEI: `${sei.blockExplorers.default.url}/address/${airdropContractAddress?.[chainId]}`,
     };
@@ -27,7 +26,7 @@ export default function Navbar() {
 
   return (
     <header className="flex flex-row min-h-[80px] items-center justify-center w-full mx-auto mb-4 mt-[4px] space-x-2">     
-      <Link
+      {/* <Link
         href={explorerURL}
         target="_blank"
         rel="noopener noreferrer"
@@ -40,7 +39,7 @@ export default function Navbar() {
           width={size}
           height={size}
         />
-      </Link>
+      </Link> */}
       {isConnected && <ConnectButton chainStatus="name" accountStatus="address" label="Connect Your Wallet" />}
     </header>
   );
