@@ -110,7 +110,7 @@ export default function CSVUpload<T = string[]>({
                 <div className="flex justify-center items-center w-14 h-14 border-[1px] border-zinc-500 rounded-lg">
                   <Icon
                     width="25"
-                    className="text-primary"
+                    className="text-zinc"
                     icon="ri:file-upload-fill"
                   />
                 </div>

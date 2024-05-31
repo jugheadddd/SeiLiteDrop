@@ -6,7 +6,7 @@ const PageTitle = ({ title }) => {
   return (
     <div className="flex flex-row items-center space-x-2">
       <Link href="/">
-        <BackIcon className="text-xl hover:text-primary" />
+        <BackIcon className="text-xl hover:text-red" />
         <span className="hidden">Back</span>
       </Link>
       <h2 className="text-2xl text-base-100">{title}</h2>

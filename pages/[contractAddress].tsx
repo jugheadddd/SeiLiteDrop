@@ -27,7 +27,7 @@ const TokenDrop = () => {
   if (token?.isLoading) {
     return (
       <div className="flex w-full h-full items-center justify-center">
-        <SpinnerIcon className="animate-spin text-5xl text-primary" />
+        <SpinnerIcon className="animate-spin text-5xl text-zinc" />
       </div>
     );
   }

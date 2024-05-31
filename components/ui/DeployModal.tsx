@@ -112,15 +112,15 @@ const DeployModal = ({ token, onClose }) => {
       <div className="flex flex-col w-4/5 md:w-1/2 mx-auto bg-white text-black rounded-md border-[2px] border-grey/[.3] z-[2] p-6">
         {isLoading ? (
           <div className="flex w-full h-full items-center justify-center">
-            <SpinnerIcon className="animate-spin text-5xl text-primary" />
+            <SpinnerIcon className="animate-spin text-5xl text-zinc" />
           </div>
         ) : deployHash ? (
           <>
             <div className="mx-auto text-center my-8 space-y-4">
-              <h1 className="text-3xl text-black font-bold text-primary">Congratulations!</h1>
+              <h1 className="text-3xl text-black font-bold text-zinc">Congratulations!</h1>
               <p>You contract has been deployed to address: {contractAddress}</p>
               <a
-                className="underline text-primary"
+                className="underline text-zinc"
                 href={deriveExternalLink(deployHash, chain.id)}
                 target="_blank"
                 rel="noreferrer"

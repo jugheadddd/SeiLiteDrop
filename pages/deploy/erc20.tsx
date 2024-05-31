@@ -60,7 +60,7 @@ const DeployERC20 = () => {
                   href="https://github.com/PopPunkLLC/gaslite-core/blob/main/src/Bytecode20.sol"
                   target="_blank"
                   rel="noreferrer"
-                  className="underline text-primary"
+                  className="underline text-red"
                 >
                   Bytecode20
                 </a>

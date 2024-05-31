@@ -121,8 +121,8 @@ const FriendTechDrop = () => {
             </div>
           ) : friendTechAddress ? (
             <div className="flex flex-row items-center space-x-4 bg-zinc-100 bg-opacity-50 border border-zinc-200 py-4 pl-4 pr-6 rounded-md mt-10">
-              <WarningIcon className="flex-shrink-0 text-2xl text-primary" />
-              <p className="text-primary">
+              <WarningIcon className="flex-shrink-0 text-2xl text-zinc" />
+              <p className="text-zinc">
                 {`This address has no associated holders.`}
               </p>
             </div>

@@ -191,7 +191,7 @@ const EnterRecipients = ({ standard, symbol, decimals, onSubmit }) => {
         <div className="flex flex-row items-center justify-between mt-1">
           {isCsvUpload ? (
             <button
-              className="underline hover:text-primary"
+              className="underline hover:text-zinc"
               onClick={() => {
                 setCsvUpload(false);
               }}
@@ -200,7 +200,7 @@ const EnterRecipients = ({ standard, symbol, decimals, onSubmit }) => {
             </button>
           ) : (
             <button
-              className="underline hover:text-primary"
+              className="underline hover:text-zinc"
               onClick={() => {
                 setCsvUpload(true);
               }}

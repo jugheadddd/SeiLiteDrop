@@ -34,7 +34,7 @@ const ExternalContractLink = ({ address, chainId }) => {
         href={deriveExternalLink(address, chainId)}
         target="_blank"
         rel="noreferrer"
-        className="flex flex-row items-center space-x-2 hover:underline text-primary"
+        className="flex flex-row items-center space-x-2 hover:underline text-zinc"
       >
         <span className="hidden md:flex text-xl">{address}</span>
         <span className="flex md:hidden text-xl">
