@@ -47,10 +47,10 @@ const DeployERC20 = () => {
       )}
       <div className="flex flex-col h-full w-full">
         <div className="flex flex-col justify-center w-full space-y-3">
-          <PageTitle title={`Deploy ERC-20`} />
+          <PageTitle title={`Deploy ERC-20 on SEI v2`} />
           <div className="flex flex-row items-center gap-2">
             <Pill>{chain.name}</Pill>
-            <Pill variant="primary">{`You are deploying to ${chain.name}`}</Pill>
+            <Pill variant="primary">{`You are deploying to ${chain.name} v2`}</Pill>
           </div>
           {hasBalance ? (
             <div className="flex flex-col space-y-1">
@@ -73,6 +73,8 @@ const DeployERC20 = () => {
                 }}
                 placeholder="Token Name"
                 type="text"
+                containerClassName={''}
+                isLoading={''}
               />
               <Input
                 value={symbol}
@@ -81,6 +83,8 @@ const DeployERC20 = () => {
                   setSymbol(symbol);
                 }}
                 placeholder="Symbol"
+                containerClassName={''}
+                isLoading={''}
               />
               <Input
                 value={totalSupply}
@@ -89,6 +93,8 @@ const DeployERC20 = () => {
                 }}
                 placeholder="Total Token Supply "
                 type="number"
+                containerClassName={''}
+                isLoading={''}
               />
               <Input
                 value={decimals}
@@ -97,6 +103,8 @@ const DeployERC20 = () => {
                 }}
                 placeholder="Decimals"
                 type="number"
+                containerClassName={''}
+                isLoading={''}
               />
               <button
                 type="button"

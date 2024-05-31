@@ -5,10 +5,13 @@ import { Address, useNetwork } from "wagmi";
 import useNetworkNativeToken from "@/components/hooks/useNetworkNativeToken";
 import useTokenData from "@/components/hooks/useTokenData";
 import Input from "@/components/ui/Input";
+import MadeBy from "@/components/ui/MadeBy";
 
 const Home = () => {
   const router = useRouter();
   const { chain } = useNetwork();
+  console.log("HIII");
+  console.log(chain);
   const { nativeToken } = useNetworkNativeToken();
   const [contractAddress, setContractAddress] = useState<Address>(null);
 
@@ -28,7 +31,7 @@ const Home = () => {
     <div className="flex flex-col">
       <p className="mb-2 text-2xl">{`Let's get started!`}</p>
       <p className="text-base mb-6 text-grey">
-        Enter an ERC-20, ERC-721, ERC-1155 contract address:
+        Enter an ERC-20 contract address:
       </p>
       <Input
         value={contractAddress}
@@ -37,16 +40,19 @@ const Home = () => {
           setContractAddress(address);
         }}
         isLoading={isLoading}
+        containerClassName={''}
       />
-      <div className="flex flex-col space-y-2 py-4">
-        <Link href="/drop/native" className="underline">
-          or airdrop {nativeToken}
-        </Link>
+      <div className="flex flex-col space-y-2 py-4">        
+        <div style={{display:'inline'}}>
+          {/* <Link href="/drop/native" className="underline"> */}
+          <Link href="" className="underline" style={{display:'inline'}}>          
+          </Link><p className="line-through" style={{display:'inline'}}>or airdrop {nativeToken}</p> coming soon...
+        </div>
         <Link href="/deploy/erc20" className="underline">
-          or deploy an ERC-20 and airdrop it
+          or deploy an ERC-20
         </Link>
         <Link href="/verify/erc20" className="underline">
-          or check if a deployed contract is Bytecode20
+          or check if existing contract is Bytecode20
         </Link>
       </div>
       {contractAddress && !isValid && !isLoading && (
@@ -55,7 +61,7 @@ const Home = () => {
                   ${chain?.name}. Double check the address and please try again.`}
         </p>
       )}
-    </div>
+    </div>    
   );
 };
 

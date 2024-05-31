@@ -36,31 +36,8 @@ const erc20approveAbi = parseAbi([
   "function approve(address spender, uint256 amount) public",
 ])
 
-const deriveExternalLink = (txHash, chainId) => {
-  switch (chainId) {
-    case sepolia.id:
-      return `https://sepolia.etherscan.io/tx/${txHash}`;
-    case optimism.id:
-      return `https://optimistic.etherscan.io/tx/${txHash}`;
-    case arbitrum.id:
-      return `https://arbiscan.io/tx/${txHash}`;
-    case polygon.id:
-      return `https://polygonscan.com/tx/${txHash}`;
-    case base.id:
-      return `https://basescan.org/tx/${txHash}`;
-    case baseSepolia.id:
-      return `https://sepolia.basescan.org/tx/${txHash}`;
-    case bsc.id:
-      return `https://bscscan.com/tx/${txHash}`;
-    case zora.id:
-      return `https://zora.superscan.network/tx/${txHash}`;
-    case blast.id:
-      return `https://blastscan.io/tx/${txHash}`;
-    case degen.id:
-      return `https://explorer.degen.tips/tx/${txHash}`;
-    default:
-      return `https://etherscan.io/tx/${txHash}`;
-  }
+const deriveExternalLink = (txHash) => {
+    return `https://seitrace.com/tx/${txHash}`;
 };
 
 const RecipientsTable = ({ data, decimals, standard, onExclude }) => (

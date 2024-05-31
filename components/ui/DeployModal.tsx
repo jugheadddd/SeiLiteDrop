@@ -14,30 +14,7 @@ import { blast } from "@/lib/chains/blast";
 import { degen } from "@/lib/chains/degen";
 
 const deriveExternalLink = (txHash, chainId) => {
-  switch (chainId) {
-    case sepolia.id:
-      return `https://sepolia.etherscan.io/tx/${txHash}`;
-    case optimism.id:
-      return `https://optimistic.etherscan.io/tx/${txHash}`;
-    case arbitrum.id:
-      return `https://arbiscan.io/tx/${txHash}`;
-    case polygon.id:
-      return `https://polygonscan.com/tx/${txHash}`;
-    case base.id:
-      return `https://basescan.org/tx/${txHash}`;
-    case baseSepolia.id:
-      return `https://sepolia.basescan.org/tx/${txHash}`;
-    case bsc.id:
-      return `https://bscscan.com/tx/${txHash}`;
-    case zora.id:
-      return `https://zora.superscan.network/tx/${txHash}`;
-    case blast.id:
-      return `https://blastscan.io/tx/${txHash}`;
-    case degen.id:
-      return `https://explorer.degen.tips/tx/${txHash}`;
-    default:
-      return `https://etherscan.io/tx/${txHash}`;
-  }
+  return `https://seitrace.com/tx/${txHash}`;
 };
 
 const TokenDetails = ({ title, value }) => (
@@ -120,7 +97,7 @@ const DeployModal = ({ token, onClose }) => {
       const receipt = await actions.onDeploy();
       if (!receipt) throw new Error("Deploy failed");
 
-      setDeployHash(receipt.transactionHash);
+      setDeployHash(receipt.transactionHash);      
       setContractAddress(receipt.contractAddress);
       console.log("Deployed contract with address", receipt.contractAddress);
     } catch (e) {
@@ -156,10 +133,10 @@ const DeployModal = ({ token, onClose }) => {
             <button
               className="bg-markPink-700 font-medium rounded-md text-white backdrop-blur w-full capitalize p-4 tracking-wide"
               onClick={async () => {
-                router.push(`/${contractAddress}`);
+                router.push(`/`);
               }}
             >
-              Continue To Airdrop
+              Back Home
             </button>
           </>
         ) : (
