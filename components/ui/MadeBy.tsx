@@ -8,7 +8,7 @@ const MadeBy: React.FC = () => {
     <div style={containerStyle}>
       <p style={textStyle}>Originally by</p>
       <h1 className="text-2xl font-alarm uppercase text-markPink-900">
-        <Link href="/">Gaslite Drop</Link>
+        <Link href="https://www.gaslite.org/">Gaslite Drop</Link>
       </h1>
     </div>
   );
