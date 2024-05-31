@@ -107,7 +107,7 @@ export default function CSVUpload<T = string[]>({
               {...getRootProps()}
             >
               <div className="space-y-6 text-center flex flex-col items-center">
-                <div className="flex justify-center items-center w-14 h-14 border-[1px] border-markPink-500 rounded-lg">
+                <div className="flex justify-center items-center w-14 h-14 border-[1px] border-zinc-500 rounded-lg">
                   <Icon
                     width="25"
                     className="text-primary"

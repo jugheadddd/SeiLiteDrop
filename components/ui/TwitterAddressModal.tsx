@@ -340,7 +340,7 @@ const TwitterAddressModal = ({
             <button
               type="button"
               className={clsx(
-                "py-4 rounded-md w-full my-4 text-white bg-markPink-900 font-bold tracking-wide",
+                "py-4 rounded-md w-full my-4 text-white bg-zinc-900 font-bold tracking-wide",
                 {
                   "opacity-30 cursor-not-allowed": data.length === 0,
                 }

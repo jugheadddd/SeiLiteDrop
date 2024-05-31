@@ -512,7 +512,7 @@ const AirdropModal = ({
               </p>
             </div>
             <button
-              className="bg-markPink-700 font-medium rounded-md text-white backdrop-blur w-full capitalize p-4 tracking-wide"
+              className="bg-zinc-700 font-medium rounded-md text-white backdrop-blur w-full capitalize p-4 tracking-wide"
               onClick={async () => {
                 await onRefresh();
                 onClose();
@@ -586,7 +586,7 @@ const AirdropModal = ({
               )}
               <button
                 className={clsx(
-                  "flex flex-row items-center justify-center bg-markPink-700 font-medium spacing-wide py-4 rounded-md text-white backdrop-blur w-full capitalize",
+                  "flex flex-row items-center justify-center bg-zinc-700 font-medium spacing-wide py-4 rounded-md text-white backdrop-blur w-full capitalize",
                   {
                     "!text-base-100/75 opacity-50 !hover:bg-primary cursor-not-allowed":
                       insufficientFunds || isProcessing,

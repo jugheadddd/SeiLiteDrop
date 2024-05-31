@@ -174,7 +174,7 @@ const EnterRecipients = ({ standard, symbol, decimals, onSubmit }) => {
             <button
               type="button"
               className={clsx(
-                "py-4 rounded-md w-full my-4 text-white bg-markPink-900 font-bold tracking-wide",
+                "py-4 rounded-md w-full my-4 text-white bg-red-900 font-bold tracking-wide",
                 {
                   "opacity-30 cursor-not-allowed": recipients.length === 0,
                 }

@@ -402,7 +402,7 @@ const TwitterDrop = () => {
                 <button
                   type="button"
                   className={clsx(
-                    "py-4 rounded-md w-full my-4 text-white bg-markPink-900 font-bold tracking-wide",
+                    "py-4 rounded-md w-full my-4 text-white bg-zinc-900 font-bold tracking-wide",
                     {
                       "opacity-30 cursor-not-allowed":
                         addresses.length === 0 || !airdropValue,
@@ -422,7 +422,7 @@ const TwitterDrop = () => {
               </div>
             </div>
           ) : id && tweet && !isLoading && !isLoadingToken && !error ? (
-            <div className="flex flex-row items-center space-x-4 bg-markPink-100 bg-opacity-50 border border-markPink-200 py-4 pl-4 pr-6 rounded-md mt-10">
+            <div className="flex flex-row items-center space-x-4 bg-zinc-100 bg-opacity-50 border border-zinc-200 py-4 pl-4 pr-6 rounded-md mt-10">
               <WarningIcon className="flex-shrink-0 text-2xl text-primary" />
               <p className="text-primary">
                 {`This tweet has no associated addresses.`}

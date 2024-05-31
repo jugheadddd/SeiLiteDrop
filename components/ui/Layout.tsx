@@ -53,9 +53,6 @@ const MobileMenu = () => (
             width: "80%",
           }}
         />
-      {/* <h1 className="text-5xl font-alarm uppercase text-markPink-900">
-        <Link href="/">Seilite Drop</Link>
-      </h1> */}
       <h2 className="text-grey text-base lg:text-xl" style={{textAlign: "center", marginTop: "2%", color: "white"}}> The most efficient airdrop tool brought to SEI by $SEIYAN.
       </h2>
     </div>
@@ -86,7 +83,7 @@ const Layout = ({ children, title = "The most efficient airdrop tool brought to 
             </div>
           </div>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </main>
       <MadeBy></MadeBy>
     </>

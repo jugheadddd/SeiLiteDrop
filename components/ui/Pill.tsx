@@ -9,7 +9,7 @@ const Pill = ({ variant = "base", children }) => {
         {
           "border-primary text-primary": variant === "primary",
           "border-black text-black": !variant || variant === "base",
-          "border-markPink-700 text-markPink-700": variant === "primary",
+          "border-red-700 text-red-700": variant === "primary",
         }
       )}
     >

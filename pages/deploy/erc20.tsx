@@ -108,7 +108,7 @@ const DeployERC20 = () => {
               />
               <button
                 type="button"
-                className={clsx("py-4 rounded-md w-full my-4 text-white bg-markPink-900 font-bold tracking-wide", {
+                className={clsx("py-4 rounded-md w-full my-4 text-white bg-zinc-900 font-bold tracking-wide", {
                   "opacity-30 cursor-not-allowed": tokenName == null || symbol == null || decimals == null,
                 })}
                 disabled={tokenName == null || symbol == null || decimals == null}
