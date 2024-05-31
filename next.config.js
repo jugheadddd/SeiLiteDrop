@@ -15,8 +15,8 @@ module.exports = withSentryConfig(
   nextConfig,
   {
     silent: true,
-    org: "gaslite",
-    project: "gaslite-drop",
+    org: "seiyan",
+    project: "sei-lite-dropper",
   },
   {
     widenClientFileUpload: true,
