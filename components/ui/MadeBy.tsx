@@ -7,7 +7,7 @@ const MadeBy: React.FC = () => {
   return (
     <div style={containerStyle}>
       <p style={textStyle}>Originally by</p>
-      <h1 className="text-2xl font-alarm uppercase text-markPink-900">
+      <h1 className="text-5xl font-alarm uppercase text-markPink-900">
         <Link href="https://www.gaslite.org/">Gaslite Drop</Link>
       </h1>
     </div>
@@ -29,7 +29,7 @@ const containerStyle: React.CSSProperties = {
 
 const textStyle: React.CSSProperties = {
     margin: '0 10px 0 0',
-    fontSize: '16px',
+    fontSize: '22px',
     fontWeight: 'bold',
     color: '#EA33F6', 
 };
