@@ -44,15 +44,15 @@ const Home = () => {
       />
       <div className="flex flex-col space-y-2 py-4">        
         <div style={{display:'inline'}}>
-          <Link href="/drop/native" className="underline">or airdrop {nativeToken}</Link>
+          <Link href="/drop/native" className="underline">or airdrop {nativeToken} on Sei</Link>
           {/* <Link href="" className="underline" style={{display:'inline'}}>           */}
           {/* </Link><p className="line-through" style={{display:'inline'}}>or airdrop {nativeToken}</p> coming soon... */}
         </div>
         <Link href="/deploy/erc20" className="underline">
-          or deploy an ERC-20
+          or deploy an ERC-20 on Sei
         </Link>
         <Link href="/verify/erc20" className="underline">
-          or check if existing contract is Bytecode20
+          or check if existing contract is Bytecode20 on Sei
         </Link>
       </div>
       {contractAddress && !isValid && !isLoading && (
