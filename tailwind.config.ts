@@ -27,7 +27,7 @@ const config: Config = {
           800: "#131316",
           900: "#050505",
         },
-        primary: "#FF00FE",
+        primary: "#F80120",
         black: "#000000",
         white: "#F5F5F5",
         grey: "#4C4C4C",

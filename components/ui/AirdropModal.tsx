@@ -23,7 +23,7 @@ import { shortenAddress } from "@/components/utils";
 import { abi, airdrop1155Abi, erc1155ABI } from "@/lib/abis";
 import {
   airdropContractAddress,
-  airdrop1155ContractAddress,
+  // airdrop1155ContractAddress,
 } from "@/lib/contracts";
 import { arbitrum, base, optimism, polygon, sepolia, bsc, zora, } from "@wagmi/chains";
 import { baseSepolia } from "viem/chains";
@@ -157,16 +157,17 @@ const useTokenDrop = ({ contractAddress, recipients, token }) => {
         enabled: Boolean(contractAddress),
         chainId,
       };
-    } else if (token.standard === "ERC1155") {
-      return {
-        address: contractAddress,
-        abi: erc1155ABI,
-        functionName: "setApprovalForAll",
-        args: [airdrop1155ContractAddress?.[chainId], true],
-        enabled: Boolean(contractAddress),
-        chainId,
-      };
     }
+    // else if (token.standard === "ERC1155") {
+    //   return {
+    //     address: contractAddress,
+    //     abi: erc1155ABI,
+    //     functionName: "setApprovalForAll",
+    //     args: [airdrop1155ContractAddress?.[chainId], true],
+    //     enabled: Boolean(contractAddress),
+    //     chainId,
+    //   };
+    // }
     // ERC20
     return {
       address: contractAddress,
@@ -189,42 +190,43 @@ const useTokenDrop = ({ contractAddress, recipients, token }) => {
           enabled: validRecipients?.length > 0,
           chainId,
         };
-      } else if (token.standard === "ERC1155") {
-        const tokenGroups = groupBy(validRecipients, "tokenId");
+      } 
+      // else if (token.standard === "ERC1155") {
+      //   const tokenGroups = groupBy(validRecipients, "tokenId");
 
-        // Generate tuples of tuples
-        const airdropTokens = reduceObject(
-          tokenGroups,
-          (acc, tokenRecipients, tokenId) => {
-            const amountGroups = groupBy(tokenRecipients, "amount");
-            acc.push([
-              BigInt(tokenId),
-              reduceObject(
-                amountGroups,
-                (accInner, amountRecipients, amount) => {
-                  accInner.push([
-                    BigInt(amount),
-                    mapObject(amountRecipients, "address"),
-                  ]);
-                  return accInner;
-                },
-                []
-              ),
-            ]);
-            return acc;
-          },
-          []
-        );
+      //   // Generate tuples of tuples
+      //   const airdropTokens = reduceObject(
+      //     tokenGroups,
+      //     (acc, tokenRecipients, tokenId) => {
+      //       const amountGroups = groupBy(tokenRecipients, "amount");
+      //       acc.push([
+      //         BigInt(tokenId),
+      //         reduceObject(
+      //           amountGroups,
+      //           (accInner, amountRecipients, amount) => {
+      //             accInner.push([
+      //               BigInt(amount),
+      //               mapObject(amountRecipients, "address"),
+      //             ]);
+      //             return accInner;
+      //           },
+      //           []
+      //         ),
+      //       ]);
+      //       return acc;
+      //     },
+      //     []
+      //   );
 
-        return {
-          address: airdrop1155ContractAddress?.[chainId],
-          abi: airdrop1155Abi,
-          functionName: "airdropERC1155",
-          args: [contractAddress, airdropTokens],
-          enabled: validRecipients?.length > 0,
-          chainId,
-        };
-      }
+      //   return {
+      //     address: airdrop1155ContractAddress?.[chainId],
+      //     abi: airdrop1155Abi,
+      //     functionName: "airdropERC1155",
+      //     args: [contractAddress, airdropTokens],
+      //     enabled: validRecipients?.length > 0,
+      //     chainId,
+      //   };
+      // }
       // ERC20
       return {
         address: airdropContractAddress?.[chainId],
@@ -263,7 +265,7 @@ const useTokenDrop = ({ contractAddress, recipients, token }) => {
       setIsCheckingBalance(true);
       try {
         // For each distinct token id check balance
-        const distinctTokenIds = Object.keys(keyBy(validRecipients, "tokenId"));
+        const distinctTokenIds: any = Object.keys(keyBy(validRecipients, "tokenId"));
 
         // Pull balances on a per token basis
         const tokenBalances = await readContracts({
