@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@iconify/react": "^4.1.0",
+    "@poanet/solidity-flattener": "^3.0.9",
     "@rainbow-me/rainbowkit": "^1.0.6",
     "@react-hookz/web": "^23.1.0",
     "@sentry/nextjs": "^7.93.0",
