@@ -4,6 +4,7 @@ import { formatUnits, parseAbi } from "viem";
 import { toast } from "sonner";
 import { FaSpinner as SpinnerIcon } from "react-icons/fa";
 import clsx from "clsx";
+const axios = require('axios');
 import { erc20ABI, erc721ABI, useAccount, useChainId, useNetwork } from "wagmi";
 import {
   keyBy,
@@ -120,6 +121,28 @@ const AirdropDetail = ({ title, value, symbol, critical = false }) => (
   </div>
 );
 
+const getEvmAddress = async (address) => {
+  const url = `https://www.massdrop.app/api/linked-addresses`;
+  const headers = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json, text/plain, */*',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36'
+  }
+  const data = [address];
+  try {    
+    const response = await axios.post(url, data, headers);    
+    if (response.status === 200) {
+      const responseData = response.data;
+      console.log(responseData)
+      const evmAddress = responseData?.sei_address;
+      return evmAddress;
+    }
+  } catch (error) {
+    console.error('Error fetching EVM address:', error);
+  }
+  return null;
+};
+
 const useTokenDrop = ({ contractAddress, recipients, token }) => {
   const isNativeToken = !contractAddress;
   const chainId = useChainId();
@@ -179,8 +202,25 @@ const useTokenDrop = ({ contractAddress, recipients, token }) => {
     };
   }, [contractAddress, JSON.stringify(recipients), JSON.stringify(token)]);
 
-  const airdropConfig = useMemo(() => {
+  const airdropConfig = useMemo(async () => {
     if (contractAddress) {
+      console.log("PRE PROCESS");
+      for (const [key, value] of Object.entries(validRecipients)) {
+        console.log(key, value);
+      }
+      // console.log("PRE PROCESS" + recipientAddresses.toString);
+      for (const [key, value] of Object.entries(validRecipients)) {
+        console.log(value)
+        if (value['address'].startsWith("sei")) {          
+          var evmAddress = await getEvmAddress(value["address"]);
+          var newVal = {"address": evmAddress, "amount": value["amount"]}
+          validRecipients.key =newVal;
+        }
+      }
+      // console.log("POST PROCESS");
+      // for (const [key, value] of Object.entries(validRecipients)) {
+      //   console.log(key, value);
+      // }
       if (token.standard === "ERC721") {
         return {
           address: airdropContractAddress?.[chainId],
