@@ -13,28 +13,59 @@ const erc721RecipientPlaceholder = `0x3a6372B2013f9876a84761187d933DEe0653E377, 
 0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD 69`;
 
 const erc20RecipientPlaceholder = `0x3a6372B2013f9876a84761187d933DEe0653E377, 4
-0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48=4.20
 0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD 4.20
-0x1a0ad011913A150f69f6A19DF447A0CfD9551054=690000000000000`;
+sei1z2cdm9p9yjfk3ak6mzatpp0kle3eywl9pcg3jn=4.20
+sei1z2cdm9p9yjfk3ak6mzatpp0kle3eywl9pcg3jn=690000000000000
+0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD 6.90`;
 
 const erc1155RecipientPlaceholder = `0x3a6372B2013f9876a84761187d933DEe0653E377, 0, 1
 0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD 69 1`;
 
 // Tuple
-const parseERC20Text = (text): [string, string][] => {
-  const regex = /^0x[a-fA-F0-9]{40}(?= ?[^ ])([=,]?) *(\d*(\.\d*)?)$/;
+// const parseERC20Text = (text): [string, string][] => {
+//   const regex = /^0x[a-fA-F0-9]{40}(?= ?[^ ])([=,]?) *(\d*(\.\d*)?)$/;
+//   const lines = text.trim().split("\n");
+//   const validLines = lines.filter((line) => regex.test(line));
+//   return validLines.reduce((acc, line) => {
+//     let [, , value] = line.match(regex);
+//     // Address is always the full 42 characters (0x plus 40 hex characters)
+//     const address = line.slice(0, 42);
+//     value = value?.replace(/^[^0-9.]+/, "");
+//     // add 0 for straight decimal value
+//     if (value?.startsWith(".")) {
+//       value = `0${value}`;
+//     }
+//     acc.push([address, value]);
+//     return acc;
+//   }, []);
+// };
+
+// SEI AND EVM ADDR
+const parseERC20AndSEIText = (text): [string, string][] => {
+  const ethRegex = /^(0x[a-fA-F0-9]{40})(?= ?[^ ])([=,]?) *(\d*(\.\d*)?)$/;
+  const seiRegex = /^(sei[a-zA-Z0-9]{38,42})(?= ?[^ ])([=,]?) *(\d*(\.\d*)?)$/;
   const lines = text.trim().split("\n");
-  const validLines = lines.filter((line) => regex.test(line));
+  const validLines = lines.filter((line) => ethRegex.test(line) || seiRegex.test(line));
+
   return validLines.reduce((acc, line) => {
-    let [, , value] = line.match(regex);
-    // Address is always the full 42 characters (0x plus 40 hex characters)
-    const address = line.slice(0, 42);
-    value = value?.replace(/^[^0-9.]+/, "");
-    // add 0 for straight decimal value
-    if (value?.startsWith(".")) {
-      value = `0${value}`;
+    let match;
+    if (ethRegex.test(line)) {
+      match = line.match(ethRegex);
+    } else if (seiRegex.test(line)) {
+      match = line.match(seiRegex);
     }
-    acc.push([address, value]);
+
+    if (match) {
+      const address = match[1];
+      let value = match[3];
+
+      value = value?.replace(/^[^0-9.]+/, "");
+
+      if (value?.startsWith(".")) {
+        value = `0${value}`;
+      }
+      acc.push([address, value]);
+    }
     return acc;
   }, []);
 };
@@ -69,7 +100,7 @@ const parseERC1155Text = (text): [string, string, string][] => {
 
 const standardToContent = {
   ERC20: {
-    help: "Enter addresses and amounts. Accepts the following formats:",
+    help: "Enter SEI or EVM based addresses and amounts. Accepts the following formats:",
     placeholder: erc20RecipientPlaceholder,
   },
   ERC1155: {
@@ -85,12 +116,12 @@ const standardToContent = {
 const EnterRecipients = ({ standard, symbol, decimals, onSubmit }) => {
   const [recipients, setRecipients] = useState([]);
   const [isCsvUpload, setCsvUpload] = useState(false);
-  const [textValue, setTextValue] = useState<String>("");
+  const [textValue, setTextValue] = useState<string>("");
 
   const parseText = useCallback(
     (text) => {
       if (standard === "ERC20") {
-        return recipientsParser(Number(decimals)).parse(parseERC20Text(text));
+        return recipientsParser(Number(decimals)).parse(parseERC20AndSEIText(text));
       } else if (standard === "ERC1155") {
         return erc1155RecipientsParser().parse(parseERC1155Text(text));
       } else if (standard === "ERC721") {
@@ -106,7 +137,8 @@ const EnterRecipients = ({ standard, symbol, decimals, onSubmit }) => {
         setRecipients(parseText(textValue));
       } catch (e) {
         setRecipients([]);
-        toast.error("There was an error parsing addresses");
+        // toast.error("There was an error parsing addresses");
+        toast.error(e.toString());
       }
     }
   }, [textValue]);

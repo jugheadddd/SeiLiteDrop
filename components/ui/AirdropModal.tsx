@@ -29,6 +29,7 @@ import { arbitrum, base, optimism, polygon, sepolia, bsc, zora, } from "@wagmi/c
 import { baseSepolia } from "viem/chains";
 import { blast } from "@/lib/chains/blast";
 import { degen } from "@/lib/chains/degen";
+const axios = import('axios');
 
 // Override the ERC20 "approve" call for tokens that do not return a value (we don't check the return)
 // value anyway and it causes an error in the UI for tokens that don't return a boolean
@@ -38,6 +39,31 @@ const erc20approveAbi = parseAbi([
 
 const deriveExternalLink = (txHash) => {
     return `https://seitrace.com/tx/${txHash}`;
+};
+
+const getEvmAddress = async (seiAddress) => {
+  const url = 'https://evm-rpc.sei-apis.com/';
+  const data = {
+    jsonrpc: "2.0",
+    id: 248,
+    method: "sei_getEVMAddress",
+    params: [seiAddress]
+  };
+  
+  const headers = {
+    'Content-Type': 'application/json'
+  };
+
+  try {
+    const response = await (await axios).default.post(url, data, { headers });
+    if (response.data.error) {
+      throw new Error(`Error from server: ${response.data.error.message}`);
+    }
+    return response.data.result;
+  } catch (error) {
+    console.error('Error fetching EVM address:', error.message);
+    throw error;
+  }
 };
 
 const RecipientsTable = ({ data, decimals, standard, onExclude }) => (
@@ -86,10 +112,16 @@ const RecipientsTable = ({ data, decimals, standard, onExclude }) => (
               )}
             </button>
           </td>
-          <td className="capitalize bg-transparent text-black bg-white p-2 border-t-2 border-neutral-700 text-left">
+          {address.startsWith('sei') ? ( 
+          <td className="bg-transparent text-black bg-white p-2 border-t-2 border-neutral-700 text-left">
             <span className="hidden md:flex">{address}</span>
             <span className="flex md:hidden">{shortenAddress(address, 6)}</span>
-          </td>
+          </td> 
+          ) : 
+          (<td className="capitalize bg-transparent text-black bg-white p-2 border-t-2 border-neutral-700 text-left">
+            <span className="hidden md:flex">{address}</span>
+            <span className="flex md:hidden">{shortenAddress(address, 6)}</span>
+          </td>)}                    
           <td className="capitalize bg-transparent text-black bg-white p-2 border-t-2 border-neutral-700 text-right">
             {formatUnits(
               BigInt(
@@ -321,7 +353,7 @@ const useTokenDrop = ({ contractAddress, recipients, token }) => {
       (token?.standard === "ERC20" && requiredAllowance <= token?.allowance),
     actions: {
       onApprove: async () => {
-        try {
+        try {          
           if (!approvalConfig) return;
           setIsProcessing(true);
           const { request } = await prepareWriteContract(approvalConfig);
@@ -337,19 +369,27 @@ const useTokenDrop = ({ contractAddress, recipients, token }) => {
           setIsProcessing(false);
         }
       },
-      onAirdrop: async () => {
+      onAirdrop: async () => {      
         try {
           if (!airdropConfig) return false;
           setIsProcessing(true);
+          var allEvmAddresses: Array<string> = [];
+          for (var addr of airdropConfig['args'][1]) {
+            if (addr.startsWith('sei')) {
+              allEvmAddresses.push(await getEvmAddress(addr));
+            }
+          }
+          airdropConfig['args'][1] = allEvmAddresses;
           const { request } = await prepareWriteContract(airdropConfig);
           const { hash } = await writeContract(request);
           await waitForTransaction({
             hash,
           });
           return hash;
-        } catch (e) {
+        } catch (e) {        
           console.error(e);
-          return false;
+          // toast.error(e.toString(), {duration: 8000})
+          return e.toString();
         } finally {
           setIsProcessing(false);
         }
@@ -451,7 +491,7 @@ const AirdropModal = ({
       }
 
       const airdropHash = await actions.onAirdrop();
-      if (!airdropHash) throw new Error("Airdrop unsuccessful");
+      if (!airdropHash.startsWith("0x")) throw new Error(airdropHash);
 
       setAirdropHash(airdropHash);
     } catch (e) {
@@ -637,7 +677,7 @@ const AirdropModal = ({
           </>
         )}
       </div>
-    </div>
+    </div>    
   );
 };
 

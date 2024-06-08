@@ -32,8 +32,6 @@ const { connectors } = getDefaultWallets({
   chains,
 });
 
-console.log(chains)
-
 export const client = createConfig({
   autoConnect: false,
   connectors,

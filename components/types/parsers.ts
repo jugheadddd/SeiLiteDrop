@@ -1,5 +1,6 @@
 import { parseUnits, isAddress } from "viem";
 import { Address } from "wagmi";
+import { isValidSeiCosmosAddress } from "@sei-js/cosmjs"
 import z from "zod";
 
 export const recipientsParser = (decimals = 18) =>
@@ -8,18 +9,21 @@ export const recipientsParser = (decimals = 18) =>
       let arr = res as [string, string][];
       const firstAddress = arr.at(0)?.at(0);
 
-      if (!firstAddress || !isAddress(firstAddress)) {
+      if (!firstAddress || (!isAddress(firstAddress) && !isValidSeiCosmosAddress(firstAddress))) {
         arr = arr.slice(1);
       }
 
       return arr.map(([address, amount]) => ({
-        address: address as Address,
+        address: address as string,  // Using 'string' since it could be either Ethereum or SEI address
         amount: parseUnits(amount, decimals),
       }));
     },
     z.array(
       z.object({
-        address: z.coerce.string().startsWith("0x").length(42),
+        address: z.coerce.string().refine(
+          (addr) => addr.startsWith("0x") && addr.length === 42 || addr.startsWith("sei") && addr.length > 38,
+          { message: "Address must be a valid Ethereum or SEI address" }
+        ),
         amount: z.bigint().refine((b) => b >= BigInt(0)),
       })
     )

@@ -10,8 +10,6 @@ import MadeBy from "@/components/ui/MadeBy";
 const Home = () => {
   const router = useRouter();
   const { chain } = useNetwork();
-  console.log("HIII");
-  console.log(chain);
   const { nativeToken } = useNetworkNativeToken();
   const [contractAddress, setContractAddress] = useState<Address>(null);
 
@@ -42,12 +40,14 @@ const Home = () => {
         isLoading={isLoading}
         containerClassName={''}
       />
-      <div className="flex flex-col space-y-2 py-4">        
+      <div className="flex flex-col space-y-2 py-4">
+        <p>$SEIYAN ERC-20: 0x5f0E07dFeE5832Faa00c63F2D33A0D79150E8598</p>
+        <br/>
         <div style={{display:'inline'}}>
           <Link href="/drop/native" className="underline">or airdrop {nativeToken} on Sei</Link>
           {/* <Link href="" className="underline" style={{display:'inline'}}>           */}
           {/* </Link><p className="line-through" style={{display:'inline'}}>or airdrop {nativeToken}</p> coming soon... */}
-        </div>
+        </div>        
         <Link href="/deploy/erc20" className="underline">
           or deploy an ERC-20 on Sei
         </Link>
