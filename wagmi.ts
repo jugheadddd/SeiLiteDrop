@@ -3,13 +3,15 @@ import { configureChains, createConfig, WebSocketPublicClient } from "wagmi";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { publicProvider } from "wagmi/providers/public";
 import { sei } from "@/lib/chains/sei";
+import { seidev } from "@/lib/chains/seidev";
 
 // NOTE: On the providers, there are some issues with Sepolia currently and Wagmi.
 // The setup below will work. Adding an Alchemy provider, for example, will break things
 // Issue: https://github.com/wagmi-dev/wagmi/issues/2219#issuecomment-1520882923
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
-    sei
+    sei,
+    seidev
   ],
   [
     jsonRpcProvider({
@@ -18,11 +20,11 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
         // webSocket: process.env.NEXT_PUBLIC_RHINO_WS!,
       }),
     }),
-    // jsonRpcProvider({
-    //   rpc: () => ({
-    //     http: process.env.NEXT_PUBLIC_SEI_API!,
-    //   }),
-    // }),
+    jsonRpcProvider({
+      rpc: () => ({
+        http: process.env.NEXT_PUBLIC_SEIDEV_API!,
+      }),
+    }),
   ]
 );
 

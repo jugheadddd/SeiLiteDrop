@@ -5,7 +5,7 @@ const DisconnectedView = () => {
   return (
     <div className="bg-transparent tracking-wider mx-auto -mt-10">
       <div className="mb-8 leading-[50px] md:leading-[70px] text-black font-black text-center md:text-left text-3xl md:text-[56px]">
-        Airdrop SEI or ERC-20 to your community
+        Airdrop SEI, ERC-20, or ERC-721  to your community
       </div>
 
       <div className="flex flex-row justify-center mt-12 text-xl">

@@ -42,18 +42,18 @@ const Home = () => {
       />
       <div className="flex flex-col space-y-2 py-4">
         <p>$SEIYAN ERC-20: 0x5f0E07dFeE5832Faa00c63F2D33A0D79150E8598</p>
-        <br/>
+        {/* <br/> */}
         <div style={{display:'inline'}}>
           <Link href="/drop/native" className="underline">or airdrop {nativeToken} on Sei</Link>
           {/* <Link href="" className="underline" style={{display:'inline'}}>           */}
           {/* </Link><p className="line-through" style={{display:'inline'}}>or airdrop {nativeToken}</p> coming soon... */}
         </div>        
-        <Link href="/deploy/erc20" className="underline">
+        {/* <Link href="/deploy/erc20" className="underline">
           or deploy an ERC-20 on Sei
-        </Link>
-        <Link href="/verify/erc20" className="underline">
+        </Link> */}
+        {/* <Link href="/verify/erc20" className="underline">
           or check if existing contract is Bytecode20 on Sei
-        </Link>
+        </Link> */}
       </div>
       {contractAddress && !isValid && !isLoading && (
         <p className=" mt-6 text-black bg-critical bg-opacity-50 border border-critical p-4 rounded-md">
