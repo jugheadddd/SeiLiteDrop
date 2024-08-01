@@ -377,6 +377,8 @@ const useTokenDrop = ({ contractAddress, recipients, token }) => {
           for (var addr of airdropConfig['args'][1]) {
             if (addr.startsWith('sei')) {
               allEvmAddresses.push(await getEvmAddress(addr));
+            } else {
+              allEvmAddresses.push(addr);
             }
           }
           airdropConfig['args'][1] = allEvmAddresses;
