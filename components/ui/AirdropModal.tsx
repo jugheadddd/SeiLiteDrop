@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useKeyboardEvent } from "@react-hookz/web";
-import { formatUnits, parseAbi } from "viem";
+import { formatUnits, parseAbi, parseGwei } from "viem";
 import { toast } from "sonner";
 import { FaSpinner as SpinnerIcon } from "react-icons/fa";
 import clsx from "clsx";
@@ -373,24 +373,52 @@ const useTokenDrop = ({ contractAddress, recipients, token }) => {
         try {
           if (!airdropConfig) return false;
           setIsProcessing(true);
+
           var allEvmAddresses: Array<string> = [];
-          for (var addr of airdropConfig['args'][1]) {
+
+          var userEnteredAddresses = airdropConfig['functionName'] == 'airdropERC20' ? airdropConfig['args'][1] : airdropConfig['args'][0];
+
+          for (var addr of userEnteredAddresses) {
             if (addr.startsWith('sei')) {
               allEvmAddresses.push(await getEvmAddress(addr));
             } else {
               allEvmAddresses.push(addr);
             }
           }
-          airdropConfig['args'][1] = allEvmAddresses;
-          const { request } = await prepareWriteContract(airdropConfig);
-          const { hash } = await writeContract(request);
-          await waitForTransaction({
-            hash,
-          });
-          return hash;
-        } catch (e) {        
-          console.error(e);
-          // toast.error(e.toString(), {duration: 8000})
+
+          airdropConfig['functionName'] == 'airdropERC20' ? airdropConfig['args'][1] = allEvmAddresses : airdropConfig['args'][0] = allEvmAddresses;
+          try {
+            const { request } = await prepareWriteContract(airdropConfig);
+
+            // Add gas estimation
+            // const estimatedGas = await publicClient.estimateGas({
+            //   account: request.account,
+            //   to: request.address,
+            //   data: request.data,
+            //   value: request.value,
+            // });
+
+            // console.log("Estimated gas:", estimatedGas.toString());
+
+            const updatedRequest = {
+              ...request,
+              // gas: parseGwei('1337420'),
+            };
+
+            const { hash } = await writeContract(updatedRequest);
+            console.log("Transaction hash:", hash);
+
+            await waitForTransaction({ hash });
+            return hash;
+          } catch (prepError) {
+            console.error("Error in prepareWriteContract or writeContract:", prepError);
+            if (prepError.cause) {
+              console.error("Cause:", prepError.cause);
+            }
+            throw prepError;
+          }
+        } catch (e) {
+          console.error('Error in onAirdrop:', e);
           return e.toString();
         } finally {
           setIsProcessing(false);
