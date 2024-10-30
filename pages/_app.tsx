@@ -6,6 +6,7 @@ import { client, chains } from "@/wagmi";
 import Layout from "@/components/ui/Layout";
 import "@/styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
+import { Analytics } from '@vercel/analytics/react';
 
 interface BigInt {
   /** Convert to BigInt to string form in JSON.stringify */
@@ -29,6 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <RainbowKitProvider chains={chains} theme={darkTheme()}>
         <Layout>
           <Component {...pageProps} />
+          <Analytics />
         </Layout>
       </RainbowKitProvider>
     </WagmiConfig>
